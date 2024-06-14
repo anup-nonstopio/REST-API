@@ -5,12 +5,11 @@ GET /api/users - send the raw data to client to do whatever he wants to do with 
 
 GET /api/users - list all users - as JSON (Done)
 
-GET /api/users/1 - get the user with ID 1
-GET /api/users/2 - get the user with ID 2
-
 Dynamic path parameters
-GET /api/users/:id
+GET /api/users/:id - id is a variable
 
+GET /api/users/1 - get the user with ID 1 (Done)
+GET /api/users/2 - get the user with ID 2 (Done)
 
 POST /api/users - create a new user
 
