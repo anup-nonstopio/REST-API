@@ -27,7 +27,7 @@ app.route('/api/users')
             if(err) {
                 return res.json({ status: 'failed' });
             }
-            return res.json({ status: 'success', id: users.length});
+            return res.status(201).res.json({ status: 'success', id: users.length});
         })
     })
     .get((req, res) => { 
