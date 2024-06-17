@@ -1,6 +1,40 @@
 const express = require('express');
 const users = require('./MOCK_DATA.json');
 const fs = require('fs');
+const mongoose = require('mongoose');
+
+//Connect to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/REST-API")
+    .then(() => console.log('Connected to MongoDB :)'))
+    .catch((err) => console.log("MongoDB connection error: ", err));
+
+//Schema
+const userSchema = new mongoose.Schema({
+    first_name: {
+        type: String,
+        required: true,
+    },
+    last_name:{
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    job_title:{
+        type: String,
+        required: true,
+    },
+    gender:{
+        type: String,
+        required: true,
+    }
+}, { timestamps: true });
+
+//Model
+const User = mongoose.model('user', userSchema);
 
 const app = express()
 const PORT = 8000;
@@ -19,16 +53,22 @@ app.use((req, res, next) => {
 
 //routes
 app.route('/api/users')
-    .post((req, res) => {
+    .post(async (req, res) => {
         const body = req.body;
-        users.push({...body, id: users.length + 1});
+        if(!body.first_name || !body.last_name || !body.email || !body.job_title || !body.gender) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
 
-        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err) => {
-            if(err) {
-                return res.json({ status: 'failed' });
-            }
-            return res.status(201).res.json({ status: 'success', id: users.length});
+        const user = await User.create({
+            first_name: body.first_name,
+            last_name: body.last_name,
+            email: body.email,
+            job_title: body.job_title,
+            gender: body.gender
         })
+
+        console.log("User: ", user);
+        return res.status(201).json({ message: 'User created successfully' });
     })
     .get((req, res) => { 
         return res.json(users);
@@ -90,4 +130,4 @@ app.get('/users', (req, res) => {         //for server side rendering
     return res.send(html);
 })
 
-app.listen(PORT, () => console.log(`Server started at ${PORT}`))
+app.listen(PORT, () => console.log(`Server started at PORT ${PORT}`))
