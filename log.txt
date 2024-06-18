@@ -1,0 +1,8 @@
+Request Method: POST, Request URL: /api/user
+Request Method: POST, Request URL: /api/user
+Request Method: POST, Request URL: /api/user
+Request Method: GET, Request URL: /api/user
+Request Method: GET, Request URL: /api/user/6671345499839385b06b141d
+Request Method: POST, Request URL: /api/user/6671345499839385b06b141d
+Request Method: PATCH, Request URL: /api/user/6671345499839385b06b141d
+Request Method: GET, Request URL: /api/user/6671345499839385b06b141d

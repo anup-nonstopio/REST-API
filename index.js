@@ -1,10 +1,10 @@
 const express = require('express');
 const userRouter = require('./routes/user.route');
-const dbConnect = require('./DB/dbConnect');
+const { dbConnect } = require('./DB/dbConnect');
 const { logReqRes } = require('./middlewares');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 //Connect to MongoDB
 dbConnect("mongodb://127.0.0.1:27017/REST-API");
@@ -14,6 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logReqRes('log.txt'));
 
 //Routes
-app.use('/user', userRouter);
+app.use('/api/user', userRouter);
 
 app.listen(PORT, () => console.log(`Server started at PORT ${PORT}`));  
